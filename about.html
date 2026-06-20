@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Lustus Trading Limited</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#34a854',
+            'brand-dark': '#289944',
+            'brand-light': '#4bc469',
+            'site-dark': '#111111',
+            'site-nav': '#0d0d0d',
+            'text-body': '#757575',
+            'text-heading': '#1a1a1a',
+          },
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --AppColor: #34a854;
+      --wbColor: #000;
+      --siteUrl: "https://lusinesstrading.com";
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; border: none; outline: none; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      color: #757575;
+      line-height: 2;
+      font-weight: 400;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1,h2,h3,h4,h5,h6 { color: #1a1a1a; line-height: 1.3; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    figure { margin: 0; }
+
+    /* NAV */
+    .site-nav { background: #0d0d0d; }
+    .nav-link { color: #ccc; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-link:hover { color: #34a854; }
+    .btn-login { border: 1px solid #34a854; color: #34a854; padding: 6px 18px; border-radius: 3px; font-size: 13px; font-weight: 500; transition: background 0.2s, color 0.2s; }
+    .btn-login:hover { background: #34a854; color: #fff; }
+    .btn-signup { background: #34a854; color: #fff; padding: 6px 18px; border-radius: 3px; font-size: 13px; font-weight: 500; transition: background 0.2s; }
+    .btn-signup:hover { background: #289944; }
+    .mobile-menu { display: none; background: #0d0d0d; }
+    .mobile-menu.open { display: block; }
+
+    /* SECTION TITLES */
+    .section-tag {
+      color: #34a854;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1.25;
+    }
+    @media (min-width: 768px) {
+      .section-title { font-size: 38px; }
+    }
+
+    /* PRIMARY BUTTON */
+    .btn-primary {
+      background: #34a854;
+      color: #fff;
+      padding: 12px 32px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 600;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary:hover { background: #289944; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* SERVICE ICON BADGE */
+    .service-icon { width: 52px; height: 52px; background: rgba(52,168,84,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+
+    /* VALUE CARD */
+    .value-card { border-top: 3px solid #34a854; padding: 28px 0; }
+
+    /* FOOTER */
+    .site-footer { background: #111; color: #aaa; }
+    .footer-link { color: #aaa; font-size: 14px; transition: color 0.2s; }
+    .footer-link:hover { color: #34a854; }
+
+    /* HAMBURGER */
+    .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #ccc; transition: transform 0.2s; }
+
+    /* AFFILIATE / CTA SECTION */
+    .affiliate-section { background: linear-gradient(135deg, #0a1a0f 0%, #112616 100%); }
+
+    /* PAGE HERO */
+    .page-hero {
+      position: relative;
+      min-height: 56vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .page-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+    }
+    .page-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(7, 17, 10, 0.80);
+      z-index: 1;
+    }
+    .page-hero-tint {
+      position: absolute;
+      inset: 0;
+      background: rgba(52, 168, 84, 0.06);
+      mix-blend-mode: multiply;
+      z-index: 2;
+    }
+    .page-hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 90px 24px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      font-size: 13px;
+      color: #6b8f76;
+    }
+    .breadcrumb a { color: #34a854; transition: color 0.2s; }
+    .breadcrumb a:hover { color: #34a854; }
+    .breadcrumb-sep { color: rgba(107, 143, 118, 0.5); }
+    .breadcrumb-current { color: #34a854; font-weight: 500; }
+
+    /* CEO FEATURED CARD */
+    .ceo-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #e8e8e8;
+      display: grid;
+    }
+    @media (min-width: 768px) {
+      .ceo-card { grid-template-columns: 260px 1fr; }
+    }
+    .ceo-card-image {
+      background: linear-gradient(135deg, #0a1a0f 0%, #112616 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 44px 36px;
+    }
+    .ceo-card-image img {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 4px solid rgba(52, 168, 84, 0.45);
+      box-shadow: 0 0 0 8px rgba(52, 168, 84, 0.08);
+    }
+    .ceo-card-body {
+      padding: 40px;
+    }
+    .ceo-stats {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 28px;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 24px;
+      flex-wrap: wrap;
+    }
+    .ceo-stat {
+      text-align: center;
+      padding: 0 28px 0 0;
+      margin-right: 28px;
+      border-right: 1px solid #e8e8e8;
+    }
+    .ceo-stat:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+    .ceo-stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: #34a854;
+      line-height: 1;
+    }
+    .ceo-stat-label {
+      font-size: 11px;
+      color: #757575;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    /* TEAM CARDS */
+    .team-card {
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      border-radius: 12px;
+      padding: 36px 28px;
+      text-align: center;
+      transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+    }
+    .team-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      border-color: #34a854;
+      transform: translateY(-4px);
+    }
+    .team-avatar {
+      width: 80px;
+      height: 80px;
+      background: #34a854;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 0.04em;
+    }
+
+    /* MOBILE */
+    @media (max-width: 767px) {
+      .ceo-card-body { padding: 28px 24px; }
+      .ceo-stats { gap: 16px; }
+      .ceo-stat { padding-right: 16px; margin-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="site-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-brand rounded flex items-center justify-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 11L13 15L21 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="text-white font-bold text-base tracking-wide uppercase leading-tight">LUSTUS<br><span class="text-brand">TRADING</span></span>
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link" style="color:#34a854;">About Us</a>
+        <a href="faqs.html" class="nav-link">FAQs</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="plans.html" class="nav-link">Plans</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="login.html" class="btn-login">Login</a>
+        <a href="signup.html" class="btn-signup">Sign Up</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button class="md:hidden hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-3">
+      <a href="index.html" class="nav-link py-2">Home</a>
+      <a href="about.html" class="nav-link py-2" style="color:#34a854;">About Us</a>
+      <a href="faqs.html" class="nav-link py-2">FAQs</a>
+      <a href="contact.html" class="nav-link py-2">Contact</a>
+      <a href="plans.html" class="nav-link py-2">Plans</a>
+      <div class="flex gap-3 pt-2">
+        <a href="login.html" class="btn-login">Login</a>
+        <a href="signup.html" class="btn-signup">Sign Up</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== PAGE HERO ===== -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="female-backgroud.jpg" alt="About Lustus Trading" />
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-tint"></div>
+  </div>
+  <div class="page-hero-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom:16px;">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb-sep">&#47;</span>
+      <span class="breadcrumb-current">About Us</span>
+    </nav>
+    <h1 style="font-family:'Playfair Display',serif; font-size:clamp(32px,5vw,58px); font-weight:800; color:#fff; line-height:1.1; letter-spacing:-0.02em; margin-bottom:20px;">
+      About Lustus Trading
+    </h1>
+    <p style="font-size:17px; color:#9db5a3; line-height:1.85; max-width:560px; margin:0 auto;">
+      Built on trust, driven by results — we are a global investment company dedicated to growing the wealth of our members with integrity and transparency.
+    </p>
+  </div>
+</section>
+
+<!-- ===== MISSION, VISION & VALUES ===== -->
+<section class="py-16 md:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-14">
+      <p class="section-tag">WHO WE ARE</p>
+      <h2 class="section-title">Guided by Purpose,<br>Driven by Performance</h2>
+      <p class="text-body mt-4 max-w-2xl mx-auto">
+        At Lustus Trading Limited, every decision we make is grounded in our core principles — making sustainable wealth-building accessible to everyone, everywhere.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <!-- Mission -->
+      <div class="value-card">
+        <div class="service-icon mb-5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="#34a854" stroke-width="2"/>
+            <circle cx="12" cy="12" r="5" stroke="#34a854" stroke-width="2"/>
+            <circle cx="12" cy="12" r="1.5" fill="#34a854"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-text-heading mb-3">Our Mission</h3>
+        <p class="text-body text-sm">
+          To deliver consistent, transparent investment returns to our global community — making financial freedom accessible to anyone, regardless of where they start their journey.
+        </p>
+      </div>
+
+      <!-- Vision -->
+      <div class="value-card">
+        <div class="service-icon mb-5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="#34a854" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="3" stroke="#34a854" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-text-heading mb-3">Our Vision</h3>
+        <p class="text-body text-sm">
+          To become the world's most trusted digital trading company, empowering millions of investors across every continent with expert guidance and cutting-edge tools.
+        </p>
+      </div>
+
+      <!-- Values -->
+      <div class="value-card">
+        <div class="service-icon mb-5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#34a854" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-text-heading mb-3">Our Values</h3>
+        <p class="text-body text-sm">
+          Integrity, transparency, and innovation form the foundation of everything we do. We put our investors first, always — because your growth is our greatest success.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== LEADERSHIP ===== -->
+<section class="py-16 md:py-24" style="background:#f4f8f5;">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-14">
+      <p class="section-tag">OUR LEADERSHIP</p>
+      <h2 class="section-title">The People Behind Lustus Trading</h2>
+      <p class="text-body mt-4 max-w-2xl mx-auto">
+        Our experienced leadership team brings decades of combined expertise in financial markets, investment strategy, and client success.
+      </p>
+    </div>
+
+    <!-- CEO Featured Card -->
+    <div class="ceo-card mb-10">
+      <div class="ceo-card-image">
+        <img src="images/ceo-mike-hudson.jpg" alt="Mike Hudson — CEO, Lustus Trading Limited" />
+      </div>
+      <div class="ceo-card-body">
+        <p class="section-tag mb-2">Chief Executive Officer</p>
+        <h3 style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:800; color:#1a1a1a; line-height:1.1; margin-bottom:6px;">Mike Hudson</h3>
+        <p style="color:#34a854; font-weight:600; font-size:14px; margin-bottom:22px;">CO-Founder &nbsp;&middot;&nbsp; Chief Executive Officer</p>
+        <p class="text-body mb-4">
+          Mike Hudson is a seasoned financial markets veteran with over 28 years of experience spanning investment management, trading strategy, and portfolio optimization. A visionary leader, Mike co-founded Lustus Trading Limited with a singular belief: that consistent, transparent investing should be accessible to everyone — not just institutions.
+        </p>
+        <p class="text-body">
+          Under his leadership, Lustus Trading has grown to serve over 22 million active traders across 29 countries, delivering reliable daily returns and building one of the most trusted investment communities in the world.
+        </p>
+        <div class="ceo-stats">
+          <div class="ceo-stat">
+            <p class="ceo-stat-num">28+</p>
+            <p class="ceo-stat-label">Years Experience</p>
+          </div>
+          <div class="ceo-stat">
+            <p class="ceo-stat-num">22M+</p>
+            <p class="ceo-stat-label">Traders Served</p>
+          </div>
+          <div class="ceo-stat">
+            <p class="ceo-stat-num">29</p>
+            <p class="ceo-stat-label">Countries Reached</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Grid -->
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="team-card">
+        <img src="images/pexels-bt-group-2161602853-37601786.jpg" alt="Sarah Roberts" style="width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;display:block;margin:0 auto 20px;" />
+        <h4 class="text-lg font-bold text-text-heading mb-1">Sarah Roberts</h4>
+        <p style="color:#34a854; font-weight:600; font-size:13px; margin-bottom:14px;">Head of Operations</p>
+        <p class="text-body text-sm">15+ years in financial services operations, ensuring seamless execution and outstanding client satisfaction across all global markets.</p>
+      </div>
+
+      <div class="team-card">
+        <img src="images/pexels-filipgrobgaard-26150470.jpg" alt="James Morgan" style="width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;display:block;margin:0 auto 20px;" />
+        <h4 class="text-lg font-bold text-text-heading mb-1">James Morgan</h4>
+        <p style="color:#34a854; font-weight:600; font-size:13px; margin-bottom:14px;">Head of Trading Strategy</p>
+        <p class="text-body text-sm">Former institutional trader with deep expertise in algorithmic systems, risk management, and multi-asset portfolio construction.</p>
+      </div>
+
+      <div class="team-card">
+        <img src="images/pexels-shazardr-14156495.jpg" alt="Lisa Chen" style="width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;display:block;margin:0 auto 20px;" />
+        <h4 class="text-lg font-bold text-text-heading mb-1">Lisa Chen</h4>
+        <p style="color:#34a854; font-weight:600; font-size:13px; margin-bottom:14px;">Client Relations Manager</p>
+        <p class="text-body text-sm">Dedicated to building lasting investor relationships and ensuring every client at Lustus Trading achieves their financial goals.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA STRIP ===== -->
+<section class="affiliate-section py-16 md:py-20">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+    <p style="color:#34a854; font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px;">GET STARTED</p>
+    <h2 style="font-family:'Playfair Display',serif; font-size:clamp(26px,4vw,44px); font-weight:800; color:#fff; line-height:1.15; margin-bottom:16px;">
+      Ready to Start Your<br>Investment Journey?
+    </h2>
+    <p style="font-size:16px; color:#9db5a3; line-height:1.85; max-width:500px; margin:0 auto 36px;">
+      Join over 22 million traders worldwide and experience the Lustus Trading difference — consistent returns, instant payouts, and 24/7 support.
+    </p>
+    <a href="#" class="btn-primary" style="font-size:16px; padding:14px 44px;">Sign Up</a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid md:grid-cols-3 gap-10 mb-10">
+
+      <!-- Brand -->
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-brand rounded flex items-center justify-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 11L13 15L21 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="text-white font-bold text-sm tracking-wide uppercase">LUSTUS TRADING<br/><span class="text-brand">LIMITED</span></span>
+        </div>
+        <p class="text-gray-500 text-sm" style="line-height:1.8;">
+          A legal company registered in UK providing professional investment management services to members worldwide.
+        </p>
+        <p class="text-gray-500 text-xs mt-3">95 Wales Road, Kiveton Park, Sheffield,<br/>South Yorkshire, S26 6RA</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Quick Links</h4>
+        <div class="grid grid-cols-2 gap-1">
+          <a href="about.html" class="footer-link py-1">About</a>
+          <a href="faqs.html" class="footer-link py-1">FAQs</a>
+          <a href="contact.html" class="footer-link py-1">Contact Us</a>
+          <a href="#" class="footer-link py-1">License</a>
+          <a href="#" class="footer-link py-1">Insurance</a>
+          <a href="#" class="footer-link py-1">Privacy Policy</a>
+          <a href="#" class="footer-link py-1">Terms &amp; Conditions</a>
+          <a href="#" class="footer-link py-1">Site Map</a>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Start Investing Today</h4>
+        <p class="text-gray-500 text-sm mb-5" style="line-height:1.8;">Join over 22 million traders worldwide. Create your account and choose your investment plan.</p>
+        <a href="signup.html" class="btn-primary text-sm py-3 px-6">Get Started</a>
+      </div>
+
+    </div>
+
+    <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+      <p class="text-gray-600 text-sm">&copy; 2025 Lustus Trading Limited. All rights reserved.</p>
+      <div class="flex gap-4">
+        <a href="#" class="footer-link text-xs">Privacy Policy</a>
+        <a href="#" class="footer-link text-xs">Terms &amp; Conditions</a>
+        <a href="#" class="footer-link text-xs">Site Map</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MOBILE NAV TOGGLE ===== -->
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+</script>
+
+</body>
+</html>

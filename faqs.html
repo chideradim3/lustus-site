@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQs — Lustus Trading Limited</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#34a854',
+            'brand-dark': '#289944',
+            'site-nav': '#0d0d0d',
+            'text-body': '#757575',
+            'text-heading': '#1a1a1a',
+          },
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { --AppColor: #34a854; }
+    * { margin: 0; padding: 0; box-sizing: border-box; border: none; outline: none; }
+    body { font-family: 'Roboto', sans-serif; font-size: 16px; color: #757575; line-height: 2; font-weight: 400; background: #fff; -webkit-font-smoothing: antialiased; }
+    h1,h2,h3,h4,h5,h6 { color: #1a1a1a; line-height: 1.3; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* NAV */
+    .site-nav { background: #0d0d0d; }
+    .nav-link { color: #ccc; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-link:hover { color: #34a854; }
+    .btn-login { border: 1px solid #34a854; color: #34a854; padding: 6px 18px; border-radius: 3px; font-size: 13px; font-weight: 500; transition: background 0.2s, color 0.2s; }
+    .btn-login:hover { background: #34a854; color: #fff; }
+    .btn-signup { background: #34a854; color: #fff; padding: 6px 18px; border-radius: 3px; font-size: 13px; font-weight: 500; transition: background 0.2s; }
+    .btn-signup:hover { background: #289944; }
+    .mobile-menu { display: none; background: #0d0d0d; }
+    .mobile-menu.open { display: block; }
+    .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #ccc; transition: transform 0.2s; }
+
+    /* PAGE HERO */
+    .page-hero { position: relative; min-height: 50vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .page-hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .page-hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+    .page-hero-overlay { position: absolute; inset: 0; background: rgba(7, 17, 10, 0.80); z-index: 1; }
+    .page-hero-tint { position: absolute; inset: 0; background: rgba(52, 168, 84, 0.06); mix-blend-mode: multiply; z-index: 2; }
+    .page-hero-content { position: relative; z-index: 3; text-align: center; padding: 90px 24px; max-width: 720px; margin: 0 auto; }
+
+    /* BREADCRUMB */
+    .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px; font-size: 13px; }
+    .breadcrumb a { color: #34a854; transition: color 0.2s; }
+    .breadcrumb a:hover { color: #4bc469; }
+    .breadcrumb-sep { color: rgba(107, 143, 118, 0.5); }
+    .breadcrumb-current { color: #34a854; font-weight: 500; }
+
+    /* SECTION */
+    .section-tag { color: #34a854; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+    .section-title { font-size: 32px; font-weight: 700; color: #1a1a1a; line-height: 1.25; }
+    @media (min-width: 768px) { .section-title { font-size: 38px; } }
+
+    /* BUTTON */
+    .btn-primary { background: #34a854; color: #fff; padding: 12px 32px; border-radius: 4px; font-size: 15px; font-weight: 600; display: inline-block; transition: background 0.2s, transform 0.15s; letter-spacing: 0.02em; }
+    .btn-primary:hover { background: #289944; transform: translateY(-1px); }
+
+    /* FOOTER */
+    .site-footer { background: #111; color: #aaa; }
+    .footer-link { color: #aaa; font-size: 14px; transition: color 0.2s; }
+    .footer-link:hover { color: #34a854; }
+
+    /* CTA */
+    .affiliate-section { background: linear-gradient(135deg, #0a1a0f 0%, #112616 100%); }
+
+    /* FAQ ACCORDION */
+    .faq-group { margin-bottom: 48px; }
+    .faq-category-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #34a854;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .faq-category-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e8e8e8;
+    }
+    .faq-item {
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .faq-item.open {
+      border-color: #34a854;
+      box-shadow: 0 4px 16px rgba(52, 168, 84, 0.1);
+    }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      cursor: pointer;
+      background: #fff;
+      user-select: none;
+    }
+    .faq-question h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+      line-height: 1.4;
+      padding-right: 16px;
+      transition: color 0.2s;
+    }
+    .faq-item.open .faq-question h3 { color: #34a854; }
+    .faq-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .faq-item.open .faq-icon { background: #34a854; border-color: #34a854; }
+    .faq-icon svg { transition: transform 0.3s; }
+    .faq-item.open .faq-icon svg { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .faq-item.open .faq-answer { max-height: 400px; }
+    .faq-answer-inner {
+      padding: 4px 24px 22px;
+      font-size: 14px;
+      color: #757575;
+      line-height: 1.9;
+      border-top: 1px solid #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="site-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-brand rounded flex items-center justify-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 11L13 15L21 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="text-white font-bold text-base tracking-wide uppercase leading-tight">LUSTUS<br><span class="text-brand">TRADING</span></span>
+      </a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="faqs.html" class="nav-link" style="color:#34a854;">FAQs</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="plans.html" class="nav-link">Plans</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="login.html" class="btn-login">Login</a>
+        <a href="signup.html" class="btn-signup">Sign Up</a>
+      </div>
+      <button class="md:hidden hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-3">
+      <a href="index.html" class="nav-link py-2">Home</a>
+      <a href="about.html" class="nav-link py-2">About Us</a>
+      <a href="faqs.html" class="nav-link py-2" style="color:#34a854;">FAQs</a>
+      <a href="contact.html" class="nav-link py-2">Contact</a>
+      <a href="plans.html" class="nav-link py-2">Plans</a>
+      <div class="flex gap-3 pt-2">
+        <a href="login.html" class="btn-login">Login</a>
+        <a href="signup.html" class="btn-signup">Sign Up</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== PAGE HERO ===== -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="images/pexels-thirdman-5582868.jpg" alt="Lustus Trading FAQs" />
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-tint"></div>
+  </div>
+  <div class="page-hero-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb-sep">&#47;</span>
+      <span class="breadcrumb-current">FAQs</span>
+    </nav>
+    <h1 style="font-family:'Playfair Display',serif; font-size:clamp(30px,5vw,54px); font-weight:800; color:#fff; line-height:1.1; letter-spacing:-0.02em; margin-bottom:18px;">
+      Frequently Asked Questions
+    </h1>
+    <p style="font-size:17px; color:#9db5a3; line-height:1.85; max-width:540px; margin:0 auto;">
+      Find answers to the most common questions about investing with Lustus Trading Limited.
+    </p>
+  </div>
+</section>
+
+<!-- ===== FAQ ACCORDION ===== -->
+<section class="py-16 md:py-24 bg-white">
+  <div style="max-width:860px;" class="mx-auto px-4 sm:px-6">
+
+    <!-- GENERAL QUESTIONS -->
+    <div class="faq-group">
+      <p class="faq-category-label">General Questions</p>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>What is Lustus Trading Limited?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Lustus Trading Limited is a professionally registered investment company based in the United Kingdom. We provide digital asset trading and investment management services to over 22 million active traders across 29 countries. Our platform offers transparent, consistent daily returns through professionally managed trading portfolios.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How does the investment process work?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Getting started is simple: register an account, select an investment plan that suits your goals, make a deposit, and begin earning daily returns. Your returns are credited to your account each day and you can request a withdrawal at any time — there are no lock-in periods.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How are my daily returns calculated?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Your daily return is calculated as a percentage of your deposited principal, based on the plan you selected. For example, the Dabbler Plan earns 1.2% per day on your deposit. Returns are credited daily and compound over the duration of your investment cycle.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>What are digital assets and how do they generate returns?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Digital assets include cryptocurrencies and other blockchain-based financial instruments. Our professional trading team actively manages diversified portfolios across these markets — executing trades, hedging risk, and capitalising on market movements — to generate the consistent returns distributed to our investors.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Which countries does Lustus Trading operate in?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Lustus Trading currently serves investors in 29 countries worldwide. Our platform is accessible globally and supports members from across Africa, Europe, Asia, and the Americas. Contact our support team to confirm availability in your specific region.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How can I contact customer support?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Our support team is available 24/7. You can reach us by email at <strong style="color:#1a1a1a;">support@lusinesstrading.com</strong>. We aim to respond to all enquiries within a few hours. For urgent matters, please mark your message as high priority.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DEPOSIT ISSUES -->
+    <div class="faq-group">
+      <p class="faq-category-label">Deposit Issues</p>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How do I make a deposit?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Log in to your Lustus Trading account, navigate to the Deposit section, choose your preferred investment plan, select your payment method, and follow the on-screen instructions. Once your deposit is confirmed on the network, your investment cycle begins automatically.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>What is the minimum deposit amount?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            The minimum deposit starts at <strong style="color:#1a1a1a;">$250</strong> on our entry-level Dabbler Plan. Higher-tier plans have different minimum requirements — ranging up to $10,000+ for our premium offerings. Choose the plan that best fits your investment goals.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>What payment methods are accepted?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            We accept deposits via major cryptocurrencies including Bitcoin (BTC), Ethereum (ETH), USDT, and other leading digital assets. We do not currently accept bank transfers or credit/debit cards. Please ensure you send funds from a wallet you control.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>I made a deposit but it hasn't appeared in my account. What should I do?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Deposits typically require a minimum number of blockchain confirmations before they appear. Please allow up to 30 minutes after your transaction is confirmed on-chain. If your deposit still hasn't appeared after that time, contact our support team with your transaction ID (TXID) and we will investigate promptly.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Can I add more funds to my existing investment?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Yes. You can make additional deposits at any time. Each new deposit creates a new independent investment cycle under your selected plan, earning returns from the date of that deposit. Your existing cycle continues unaffected.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- WITHDRAWAL ISSUES -->
+    <div class="faq-group">
+      <p class="faq-category-label">Withdrawal Issues</p>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How do I request a withdrawal?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Log in to your account and navigate to the Withdrawal section. Enter the amount you wish to withdraw and your wallet address, then confirm the request. Withdrawals are processed instantly — no delays, no waiting periods.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How long does a withdrawal take to process?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Withdrawals are processed <strong style="color:#1a1a1a;">instantly</strong> upon request. Once approved, funds are sent directly to your wallet. Network confirmation times vary by blockchain but are typically completed within minutes.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Is there a minimum withdrawal amount?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            A minimum withdrawal threshold may apply depending on your plan. Please refer to your plan's terms within your account dashboard for the exact minimum. This threshold is in place to ensure network transaction fees do not exceed the withdrawal amount.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Are there any withdrawal fees?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Lustus Trading does not charge any platform withdrawal fees. However, standard blockchain network (gas) fees apply to all crypto transactions and are deducted from your withdrawal amount. These fees are set by the network, not by us.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ACCOUNT ISSUES -->
+    <div class="faq-group" style="margin-bottom:0;">
+      <p class="faq-category-label">Account Issues</p>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How do I create an account?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Click the <strong style="color:#1a1a1a;">Sign Up</strong> button on any page of our website. Fill in your name, email address, and create a secure password. Once registered, you will receive a confirmation email to verify your account. You can then log in and make your first deposit.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How do I reset my password?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            On the login page, click <strong style="color:#1a1a1a;">"Forgot Password"</strong>. Enter the email address associated with your account and we will send you a password reset link. If you do not receive the email within a few minutes, check your spam folder or contact support.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Can I have more than one account?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            No. Each person is permitted to hold only one account with Lustus Trading Limited. Creating multiple accounts violates our terms and conditions and may result in all associated accounts being suspended. If you have a legitimate need for a second account, please contact support.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How do I update my profile information?</h3>
+          <span class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Log in to your account and go to the <strong style="color:#1a1a1a;">Account Settings</strong> section. From there you can update your personal details, email address, and notification preferences. For changes to sensitive information such as your registered name, please contact our support team for assistance.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA STRIP ===== -->
+<section class="affiliate-section py-16 md:py-20">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+    <p style="color:#34a854; font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px;">STILL HAVE QUESTIONS?</p>
+    <h2 style="font-family:'Playfair Display',serif; font-size:clamp(26px,4vw,42px); font-weight:800; color:#fff; line-height:1.15; margin-bottom:16px;">
+      We're Here to Help
+    </h2>
+    <p style="font-size:16px; color:#9db5a3; line-height:1.85; max-width:480px; margin:0 auto 36px;">
+      Can't find the answer you're looking for? Our 24/7 support team is always ready to assist you.
+    </p>
+    <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:center;">
+      <a href="mailto:support@lusinesstrading.com" class="btn-primary" style="font-size:15px; padding:13px 36px;">Contact Support</a>
+      <a href="#" style="color:#9db5a3; font-size:14px; font-weight:500; display:flex; align-items:center; gap:6px; transition:color 0.2s;"
+         onmouseover="this.style.color='#34a854'" onmouseout="this.style.color='#9db5a3'">
+        Sign Up
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid md:grid-cols-3 gap-10 mb-10">
+
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-brand rounded flex items-center justify-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 11L13 15L21 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="text-white font-bold text-sm tracking-wide uppercase">LUSTUS TRADING<br/><span class="text-brand">LIMITED</span></span>
+        </div>
+        <p class="text-gray-500 text-sm" style="line-height:1.8;">
+          A legal company registered in UK providing professional investment management services to members worldwide.
+        </p>
+        <p class="text-gray-500 text-xs mt-3">95 Wales Road, Kiveton Park, Sheffield,<br/>South Yorkshire, S26 6RA</p>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Quick Links</h4>
+        <div class="grid grid-cols-2 gap-1">
+          <a href="about.html" class="footer-link py-1">About</a>
+          <a href="faqs.html" class="footer-link py-1">FAQs</a>
+          <a href="contact.html" class="footer-link py-1">Contact Us</a>
+          <a href="#" class="footer-link py-1">License</a>
+          <a href="#" class="footer-link py-1">Insurance</a>
+          <a href="#" class="footer-link py-1">Privacy Policy</a>
+          <a href="#" class="footer-link py-1">Terms &amp; Conditions</a>
+          <a href="#" class="footer-link py-1">Site Map</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Start Investing Today</h4>
+        <p class="text-gray-500 text-sm mb-5" style="line-height:1.8;">Join over 22 million traders worldwide. Create your account and choose your investment plan.</p>
+        <a href="#" class="btn-primary text-sm py-3 px-6">Get Started</a>
+      </div>
+
+    </div>
+    <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+      <p class="text-gray-600 text-sm">&copy; 2025 Lustus Trading Limited. All rights reserved.</p>
+      <div class="flex gap-4">
+        <a href="#" class="footer-link text-xs">Privacy Policy</a>
+        <a href="#" class="footer-link text-xs">Terms &amp; Conditions</a>
+        <a href="#" class="footer-link text-xs">Site Map</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MOBILE NAV TOGGLE ===== -->
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+</script>
+
+<!-- ===== FAQ ACCORDION ===== -->
+<script>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-question').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => o.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>

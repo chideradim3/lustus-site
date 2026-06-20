@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Lustus Trading Limited</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#34a854',
+            'brand-dark': '#289944',
+            'brand-light': '#4bc469',
+            'site-dark': '#111111',
+            'site-nav': '#0d0d0d',
+            'text-body': '#757575',
+            'text-heading': '#1a1a1a',
+          },
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { --AppColor: #34a854; }
+    * { margin: 0; padding: 0; box-sizing: border-box; border: none; outline: none; }
+    body { font-family: 'Roboto', sans-serif; font-size: 16px; color: #757575; line-height: 2; font-weight: 400; background: #f7f9f8; -webkit-font-smoothing: antialiased; }
+    h1,h2,h3,h4,h5,h6 { color: #1a1a1a; line-height: 1.3; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* NAV */
+    .site-nav { background: #0a130c; border-bottom: 2px solid #1a2e1f; }
+    .nav-link { color: #ccc; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-link:hover { color: #34a854; }
+    .mobile-menu { display: none; background: #0a130c; }
+    .mobile-menu.open { display: block; }
+    .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #ccc; }
+
+    /* ADMIN BADGE */
+    .admin-badge { background: #34a854; color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 0.12em; padding: 2px 8px; border-radius: 3px; text-transform: uppercase; vertical-align: middle; }
+
+    /* PAGE HEADER */
+    .page-header { background: #0f1f13; border-bottom: 1px solid #1e3524; padding: 36px 24px 32px; text-align: center; }
+    .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 14px; font-size: 13px; color: #5a8a68; }
+    .breadcrumb a { color: #34a854; transition: color 0.2s; }
+    .breadcrumb-sep { color: rgba(90,138,104,0.5); }
+    .breadcrumb-current { color: #34a854; font-weight: 500; }
+
+    /* STAT CARDS */
+    .stat-card {
+      background: #fff;
+      border: 1.5px solid #e8e8e8;
+      border-radius: 14px;
+      padding: 28px 24px;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .stat-card:hover { border-color: #34a854; box-shadow: 0 8px 28px rgba(52,168,84,0.1); transform: translateY(-3px); }
+
+    .stat-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    /* BUTTONS */
+    .btn-confirm { background: #34a854; color: #fff; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-block; transition: background 0.2s; cursor: pointer; letter-spacing: 0.04em; }
+    .btn-confirm:hover { background: #289944; }
+    .btn-reject { border: 1.5px solid #e53e3e; color: #e53e3e; padding: 5px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-block; transition: background 0.2s, color 0.2s; cursor: pointer; letter-spacing: 0.04em; }
+    .btn-reject:hover { background: #e53e3e; color: #fff; }
+
+    /* TABLES */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th { text-align: left; font-size: 11px; font-weight: 700; color: #1a1a1a; text-transform: uppercase; letter-spacing: 0.1em; padding: 12px 16px; background: #f7f9f8; border-bottom: 1.5px solid #e8e8e8; white-space: nowrap; }
+    .data-table td { padding: 14px 16px; font-size: 14px; color: #757575; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table .empty-row td { text-align: center; padding: 48px 16px; color: #bbb; font-size: 14px; }
+    .data-table tr:hover td { background: #fafffe; }
+
+    /* STATUS PILLS */
+    .pill-pending { display: inline-block; background: #fff8e6; color: #92600a; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 20px; border: 1px solid #fde9a2; }
+    .pill-confirmed { display: inline-block; background: #e8f5ec; color: #1a6b34; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 20px; border: 1px solid #b2dfc0; }
+    .pill-rejected { display: inline-block; background: #fde8e8; color: #9b1c1c; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 20px; border: 1px solid #f5c6c6; }
+    .pill-active { display: inline-block; background: #e8f5ec; color: #1a6b34; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 20px; border: 1px solid #b2dfc0; }
+
+    /* TABLE SECTION CARD */
+    .table-card { background: #fff; border: 1.5px solid #e8e8e8; border-radius: 14px; overflow: hidden; }
+    .table-card-header { padding: 20px 24px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+
+    /* FOOTER */
+    .site-footer { background: #111; color: #aaa; }
+    .footer-link { color: #aaa; font-size: 14px; transition: color 0.2s; }
+    .footer-link:hover { color: #34a854; }
+
+    /* LOGOUT */
+    .logout-link { color: #aaa; font-size: 13px; font-weight: 500; transition: color 0.2s; cursor: pointer; }
+    .logout-link:hover { color: #e53e3e; }
+
+    /* TABLE OVERFLOW */
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    /* MOBILE */
+    @media (max-width: 767px) {
+      .data-table th { padding: 10px 10px; font-size: 10px; }
+      .data-table td { padding: 10px 10px; font-size: 12px; }
+      .table-card-header { padding: 16px; flex-wrap: wrap; gap: 10px; }
+      .stat-card { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="site-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-brand rounded flex items-center justify-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 11L13 15L21 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="text-white font-bold text-base tracking-wide uppercase leading-tight">LUSTUS<br><span class="text-brand">TRADING</span></span>
+        <span class="admin-badge" style="margin-left:6px;">ADMIN</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="dashboard.html" class="nav-link">User View</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-3">
+        <div style="width:36px; height:36px; border-radius:50%; background:#34a854; color:#fff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center;">A</div>
+        <span style="color:#ccc; font-size:14px; font-weight:500;">Admin</span>
+        <a href="login.html" id="logout-btn" class="logout-link" style="margin-left:8px;">Log Out</a>
+      </div>
+
+      <button class="md:hidden hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-3">
+      <a href="index.html" class="nav-link py-2">Home</a>
+      <a href="dashboard.html" class="nav-link py-2">User View</a>
+      <a href="login.html" id="logout-btn-mobile" class="logout-link py-2">Log Out</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== PAGE HEADER ===== -->
+<div class="page-header">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="breadcrumb-sep">&#47;</span>
+    <span class="breadcrumb-current">Admin Dashboard</span>
+  </nav>
+  <h1 style="font-family:'Playfair Display',serif; font-size:clamp(26px,4vw,40px); font-weight:800; color:#fff; line-height:1.15; margin-bottom:8px;">Admin Dashboard</h1>
+  <p style="font-size:15px; color:#5a8a68; max-width:480px; margin:0 auto; line-height:1.7;">Manage users, review deposits, and oversee platform activity.</p>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+
+  <!-- Stats Overview -->
+  <div style="margin-bottom:40px;">
+    <h3 style="font-size:14px; font-weight:700; color:#1a1a1a; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Platform Overview</h3>
+    <div class="stat-grid">
+
+      <!-- Total Users -->
+      <div class="stat-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <div style="width:40px; height:40px; border-radius:10px; background:rgba(98,126,234,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#627EEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="#627EEA" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87" stroke="#627EEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 3.13a4 4 0 010 7.75" stroke="#627EEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p style="font-size:12px; font-weight:700; color:#6b8f76; text-transform:uppercase; letter-spacing:0.1em;">Total Users</p>
+        </div>
+        <p id="stat-total-users" style="font-family:'Playfair Display',serif; font-size:40px; font-weight:800; color:#1a1a1a; line-height:1;">0</p>
+        <p style="font-size:12px; color:#aaa; margin-top:6px;">Registered accounts</p>
+      </div>
+
+      <!-- Pending Deposits -->
+      <div class="stat-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <div style="width:40px; height:40px; border-radius:10px; background:rgba(146,96,10,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#92600a" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="12" stroke="#92600a" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="#92600a" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <p style="font-size:12px; font-weight:700; color:#6b8f76; text-transform:uppercase; letter-spacing:0.1em;">Pending Deposits</p>
+        </div>
+        <p id="stat-pending-count" style="font-family:'Playfair Display',serif; font-size:40px; font-weight:800; color:#92600a; line-height:1;">0</p>
+        <p style="font-size:12px; color:#aaa; margin-top:6px;">Awaiting confirmation</p>
+      </div>
+
+      <!-- Total Deposited -->
+      <div class="stat-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <div style="width:40px; height:40px; border-radius:10px; background:rgba(52,168,84,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="#34a854" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p style="font-size:12px; font-weight:700; color:#6b8f76; text-transform:uppercase; letter-spacing:0.1em;">Total Deposited</p>
+        </div>
+        <p id="stat-total-deposited" style="font-family:'Playfair Display',serif; font-size:32px; font-weight:800; color:#1a1a1a; line-height:1;">$0.00</p>
+        <p style="font-size:12px; color:#aaa; margin-top:6px;">Platform-wide deposits</p>
+      </div>
+
+      <!-- Total Confirmed -->
+      <div class="stat-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <div style="width:40px; height:40px; border-radius:10px; background:rgba(52,168,84,0.08); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#34a854" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p style="font-size:12px; font-weight:700; color:#6b8f76; text-transform:uppercase; letter-spacing:0.1em;">Total Confirmed</p>
+        </div>
+        <p id="stat-total-confirmed" style="font-family:'Playfair Display',serif; font-size:32px; font-weight:800; color:#34a854; line-height:1;">$0.00</p>
+        <p style="font-size:12px; color:#aaa; margin-top:6px;">Approved &amp; credited</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Pending Deposits Table -->
+  <div style="margin-bottom:40px;">
+    <div class="table-card">
+      <div class="table-card-header">
+        <div>
+          <h3 style="font-size:16px; font-weight:700; color:#1a1a1a; margin-bottom:2px;">Pending Deposits</h3>
+          <p style="font-size:13px; color:#aaa; line-height:1.4;">Review and confirm or reject user deposit requests.</p>
+        </div>
+        <span id="pending-count-pill" class="pill-pending">0 Pending</span>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>User Name</th>
+              <th>Email</th>
+              <th>Amount</th>
+              <th>Crypto</th>
+              <th>Plan</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="pending-deposits-tbody">
+            <tr class="empty-row">
+              <td colspan="8">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" style="opacity:0.25;"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="#34a854" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>No pending deposits at this time.</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Users Table -->
+  <div>
+    <div class="table-card">
+      <div class="table-card-header">
+        <div>
+          <h3 style="font-size:16px; font-weight:700; color:#1a1a1a; margin-bottom:2px;">All Users</h3>
+          <p style="font-size:13px; color:#aaa; line-height:1.4;">Complete list of registered accounts and their investment status.</p>
+        </div>
+        <span id="all-users-count" style="color:#aaa; font-size:13px;">0 users</span>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Balance</th>
+              <th>Total Deposited</th>
+              <th>Active Plan</th>
+              <th>Joined</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="all-users-tbody">
+            <tr class="empty-row">
+              <td colspan="7">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" style="opacity:0.25;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#34a854" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="#34a854" stroke-width="1.5"/></svg>
+                  <span>No registered users yet.</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid md:grid-cols-3 gap-10 mb-10">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-brand rounded flex items-center justify-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 11L13 15L21 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="text-white font-bold text-sm tracking-wide uppercase">LUSTUS TRADING<br/><span class="text-brand">LIMITED</span></span>
+        </div>
+        <p class="text-gray-500 text-sm" style="line-height:1.8;">A legal company registered in UK providing professional investment management services to members worldwide.</p>
+        <p class="text-gray-500 text-xs mt-3">95 Wales Road, Kiveton Park, Sheffield,<br/>South Yorkshire, S26 6RA</p>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Admin Links</h4>
+        <div class="flex flex-col gap-1">
+          <a href="dashboard.html" class="footer-link py-1">User Dashboard</a>
+          <a href="index.html" class="footer-link py-1">Main Site</a>
+          <a href="contact.html" class="footer-link py-1">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Admin Panel</h4>
+        <p class="text-gray-500 text-sm mb-5" style="line-height:1.8;">Manage the Lustus Trading platform. Confirm deposits to update user balances in real time.</p>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+      <p class="text-gray-600 text-sm">&copy; 2025 Lustus Trading Limited. Admin Panel.</p>
+      <div class="flex gap-4">
+        <a href="#" class="footer-link text-xs">Privacy Policy</a>
+        <a href="#" class="footer-link text-xs">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  import { auth, db } from './firebase-config.js';
+  import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import {
+    collection, query, where, onSnapshot,
+    doc, getDoc, writeBatch, updateDoc,
+    increment, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // Mobile menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // Logout
+  document.getElementById('logout-btn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    await signOut(auth);
+    window.location.href = 'login.html';
+  });
+  document.getElementById('logout-btn-mobile').addEventListener('click', async (e) => {
+    e.preventDefault();
+    await signOut(auth);
+    window.location.href = 'login.html';
+  });
+
+  // Auth guard — must be admin to access this page
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = 'login.html';
+      return;
+    }
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    if (!snap.exists() || snap.data().role !== 'admin') {
+      window.location.href = 'dashboard.html';
+      return;
+    }
+    loadPendingDeposits();
+    loadAllUsers();
+    loadDepositStats();
+  });
+
+  // Real-time pending deposits
+  function loadPendingDeposits() {
+    const q = query(collection(db, 'deposits'), where('status', '==', 'pending'));
+
+    onSnapshot(q, (snapshot) => {
+      const tbody = document.getElementById('pending-deposits-tbody');
+      const count = snapshot.size;
+
+      document.getElementById('stat-pending-count').textContent = count;
+      document.getElementById('pending-count-pill').textContent = count + ' Pending';
+
+      if (count === 0) {
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="8"><div style="display:flex;flex-direction:column;align-items:center;gap:10px;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" style="opacity:0.25;"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="#34a854" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>No pending deposits at this time.</span></div></td></tr>`;
+        return;
+      }
+
+      // Sort by date descending in JS (avoids composite index requirement)
+      const sorted = snapshot.docs.sort((a, b) => {
+        return (b.data().createdAt?.seconds || 0) - (a.data().createdAt?.seconds || 0);
+      });
+
+      tbody.innerHTML = '';
+      sorted.forEach((docSnap) => {
+        const d = docSnap.data();
+        const date = d.createdAt?.toDate ? d.createdAt.toDate().toLocaleDateString('en-GB') : '—';
+        const id = docSnap.id;
+        tbody.innerHTML += `
+          <tr>
+            <td style="font-weight:600;color:#1a1a1a;">—</td>
+            <td style="font-size:13px;">${d.userEmail || '—'}</td>
+            <td style="font-weight:700;color:#34a854;">$${Number(d.amount).toLocaleString()}</td>
+            <td>${d.crypto}</td>
+            <td>—</td>
+            <td>${date}</td>
+            <td><span class="pill-pending">Pending</span></td>
+            <td style="white-space:nowrap;">
+              <button class="btn-confirm" onclick="approveDeposit('${id}','${d.userId}',${d.amount})" style="margin-right:6px;">Approve</button>
+              <button class="btn-reject" onclick="rejectDeposit('${id}')">Reject</button>
+            </td>
+          </tr>`;
+      });
+    });
+  }
+
+  // Real-time all users table
+  function loadAllUsers() {
+    onSnapshot(collection(db, 'users'), (snapshot) => {
+      const tbody = document.getElementById('all-users-tbody');
+      const users = snapshot.docs.filter(d => d.data().role !== 'admin');
+      const count = users.length;
+
+      document.getElementById('all-users-count').textContent = count + ' user' + (count !== 1 ? 's' : '');
+      document.getElementById('stat-total-users').textContent = count;
+
+      if (count === 0) {
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="7"><div style="display:flex;flex-direction:column;align-items:center;gap:10px;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" style="opacity:0.25;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#34a854" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="#34a854" stroke-width="1.5"/></svg><span>No registered users yet.</span></div></td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = '';
+      users.forEach((docSnap) => {
+        const u = docSnap.data();
+        const joined = u.createdAt?.toDate ? u.createdAt.toDate().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : '—';
+        tbody.innerHTML += `
+          <tr>
+            <td style="font-weight:600;color:#1a1a1a;">${u.name || '—'}</td>
+            <td style="font-size:13px;">${u.email}</td>
+            <td style="font-weight:700;color:#34a854;">$${Number(u.balance || 0).toLocaleString()}</td>
+            <td>$${Number(u.totalDeposited || 0).toLocaleString()}</td>
+            <td>—</td>
+            <td>${joined}</td>
+            <td><span class="pill-active">Active</span></td>
+          </tr>`;
+      });
+    });
+  }
+
+  // Real-time deposit totals for stat cards
+  function loadDepositStats() {
+    onSnapshot(collection(db, 'deposits'), (snapshot) => {
+      let totalDeposited = 0;
+      let totalConfirmed = 0;
+      snapshot.forEach((d) => {
+        const data = d.data();
+        totalDeposited += Number(data.amount || 0);
+        if (data.status === 'approved') totalConfirmed += Number(data.amount || 0);
+      });
+      document.getElementById('stat-total-deposited').textContent = '$' + totalDeposited.toLocaleString();
+      document.getElementById('stat-total-confirmed').textContent = '$' + totalConfirmed.toLocaleString();
+    });
+  }
+
+  // Approve deposit — atomic batch: update deposit + credit user balance
+  window.approveDeposit = async function (depositId, userId, amount) {
+    if (!confirm('Approve this $' + amount + ' deposit and credit the user?')) return;
+    try {
+      const batch = writeBatch(db);
+      batch.update(doc(db, 'deposits', depositId), {
+        status: 'approved',
+        approvedAt: serverTimestamp()
+      });
+      batch.update(doc(db, 'users', userId), {
+        balance: increment(Number(amount)),
+        totalDeposited: increment(Number(amount))
+      });
+      await batch.commit();
+    } catch (err) {
+      alert('Failed to approve deposit. Please try again.');
+      console.error(err);
+    }
+  };
+
+  // Reject deposit
+  window.rejectDeposit = async function (depositId) {
+    if (!confirm('Reject this deposit?')) return;
+    try {
+      await updateDoc(doc(db, 'deposits', depositId), {
+        status: 'rejected',
+        rejectedAt: serverTimestamp()
+      });
+    } catch (err) {
+      alert('Failed to reject deposit. Please try again.');
+      console.error(err);
+    }
+  };
+</script>
+
+</body>
+</html>

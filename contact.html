@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — Lustus Trading Limited</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#34a854',
+            'brand-dark': '#289944',
+            'brand-light': '#4bc469',
+            'site-dark': '#111111',
+            'site-nav': '#0d0d0d',
+            'text-body': '#757575',
+            'text-heading': '#1a1a1a',
+          },
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --AppColor: #34a854;
+      --wbColor: #000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; border: none; outline: none; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      color: #757575;
+      line-height: 2;
+      font-weight: 400;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1,h2,h3,h4,h5,h6 { color: #1a1a1a; line-height: 1.3; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* NAV */
+    .site-nav { background: #0d0d0d; }
+    .nav-link { color: #ccc; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-link:hover { color: #34a854; }
+    .btn-login { border: 1px solid #34a854; color: #34a854; padding: 6px 18px; border-radius: 3px; font-size: 13px; font-weight: 500; transition: background 0.2s, color 0.2s; }
+    .btn-login:hover { background: #34a854; color: #fff; }
+    .btn-signup { background: #34a854; color: #fff; padding: 6px 18px; border-radius: 3px; font-size: 13px; font-weight: 500; transition: background 0.2s; }
+    .btn-signup:hover { background: #289944; }
+    .mobile-menu { display: none; background: #0d0d0d; }
+    .mobile-menu.open { display: block; }
+
+    /* SECTION TITLES */
+    .section-tag {
+      color: #34a854;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1.25;
+    }
+    @media (min-width: 768px) {
+      .section-title { font-size: 38px; }
+    }
+
+    /* PRIMARY BUTTON */
+    .btn-primary {
+      background: #34a854;
+      color: #fff;
+      padding: 12px 32px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 600;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: #289944; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:disabled { background: #6dbf81; cursor: not-allowed; transform: none; }
+
+    /* FOOTER */
+    .site-footer { background: #111; color: #aaa; }
+    .footer-link { color: #aaa; font-size: 14px; transition: color 0.2s; }
+    .footer-link:hover { color: #34a854; }
+
+    /* HAMBURGER */
+    .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #ccc; transition: transform 0.2s; }
+
+    /* AFFILIATE / CTA SECTION */
+    .affiliate-section { background: linear-gradient(135deg, #0a1a0f 0%, #112616 100%); }
+
+    /* PAGE HERO */
+    .page-hero {
+      position: relative;
+      min-height: 56vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .page-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+    }
+    .page-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(7, 17, 10, 0.80);
+      z-index: 1;
+    }
+    .page-hero-tint {
+      position: absolute;
+      inset: 0;
+      background: rgba(52, 168, 84, 0.06);
+      mix-blend-mode: multiply;
+      z-index: 2;
+    }
+    .page-hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 90px 24px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      font-size: 13px;
+      color: #6b8f76;
+    }
+    .breadcrumb a { color: #34a854; transition: color 0.2s; }
+    .breadcrumb-sep { color: rgba(107, 143, 118, 0.5); }
+    .breadcrumb-current { color: #34a854; font-weight: 500; }
+
+    /* CONTACT INFO CARDS */
+    .contact-info-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: #fff;
+      border: 1px solid #e8f0eb;
+      border-radius: 12px;
+      padding: 28px 24px;
+      box-shadow: 0 2px 12px rgba(52,168,84,0.06);
+      transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
+    }
+    .contact-info-card:hover {
+      box-shadow: 0 6px 24px rgba(52,168,84,0.12);
+      border-color: #34a854;
+      transform: translateY(-2px);
+    }
+    .contact-icon {
+      width: 48px;
+      height: 48px;
+      background: #34a854;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* FORM STYLES */
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'Roboto', sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-input:focus {
+      border-color: #34a854;
+      box-shadow: 0 0 0 3px rgba(52,168,84,0.1);
+    }
+    .form-input::placeholder { color: #b0b0b0; }
+    textarea.form-input { resize: vertical; min-height: 130px; }
+
+    /* SOCIAL ICONS */
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #757575;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .social-icon:hover {
+      border-color: #34a854;
+      color: #34a854;
+      background: rgba(52,168,84,0.06);
+    }
+
+    /* FORM RESULT MESSAGE */
+    #form-result {
+      display: none;
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 12px;
+    }
+    #form-result.success {
+      background: #e8f5ec;
+      color: #1a6b34;
+      border: 1px solid #b2dfc0;
+      display: block;
+    }
+    #form-result.error {
+      background: #fde8e8;
+      color: #9b1c1c;
+      border: 1px solid #f5c6c6;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="site-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-brand rounded flex items-center justify-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 11L13 15L21 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="text-white font-bold text-base tracking-wide uppercase leading-tight">LUSTUS<br><span class="text-brand">TRADING</span></span>
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="faqs.html" class="nav-link">FAQs</a>
+        <a href="contact.html" class="nav-link" style="color:#34a854;">Contact</a>
+        <a href="plans.html" class="nav-link">Plans</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="login.html" class="btn-login">Login</a>
+        <a href="signup.html" class="btn-signup">Sign Up</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button class="md:hidden hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-3">
+      <a href="index.html" class="nav-link py-2">Home</a>
+      <a href="about.html" class="nav-link py-2">About Us</a>
+      <a href="faqs.html" class="nav-link py-2">FAQs</a>
+      <a href="contact.html" class="nav-link py-2" style="color:#34a854;">Contact</a>
+      <a href="plans.html" class="nav-link py-2">Plans</a>
+      <div class="flex gap-3 pt-2">
+        <a href="login.html" class="btn-login">Login</a>
+        <a href="signup.html" class="btn-signup">Sign Up</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== PAGE HERO ===== -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="female-backgroud.jpg" alt="Contact Lustus Trading" />
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-tint"></div>
+  </div>
+  <div class="page-hero-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom:16px;">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb-sep">&#47;</span>
+      <span class="breadcrumb-current">Contact</span>
+    </nav>
+    <h1 style="font-family:'Playfair Display',serif; font-size:clamp(32px,5vw,58px); font-weight:800; color:#fff; line-height:1.1; letter-spacing:-0.02em; margin-bottom:20px;">
+      Contact Us
+    </h1>
+    <p style="font-size:17px; color:#9db5a3; line-height:1.85; max-width:520px; margin:0 auto;">
+      Our support team is available around the clock to assist you. Reach out and we'll get back to you promptly.
+    </p>
+  </div>
+</section>
+
+<!-- ===== CONTACT INFO CARDS ===== -->
+<section class="py-14 bg-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- Email Card -->
+      <div class="contact-info-card">
+        <div class="contact-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest" style="color:#34a854; margin-bottom:4px;">Email</p>
+          <p class="font-semibold text-text-heading text-sm mb-1">Send us an email</p>
+          <a href="mailto:support@lusinesstrading.com" class="text-sm" style="color:#34a854;">support@lusinesstrading.com</a>
+        </div>
+      </div>
+
+      <!-- Address Card -->
+      <div class="contact-info-card">
+        <div class="contact-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest" style="color:#34a854; margin-bottom:4px;">Address</p>
+          <p class="font-semibold text-text-heading text-sm mb-1">Visit our office</p>
+          <p class="text-sm text-body">95 Wales Road, Kiveton Park,<br/>Sheffield, South Yorkshire, S26 6RA</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== WRITE A MESSAGE ===== -->
+<section style="background:#f9fafb;" class="py-16 md:py-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+
+      <!-- Left: info + social -->
+      <div>
+        <p class="section-tag">CONTACT WITH US</p>
+        <h2 class="section-title mb-5">Write a Message</h2>
+        <p class="text-body mb-8" style="max-width:400px;">
+          Our support team is quick to reply and is fluent in most languages of the world. We typically respond within a few hours.
+        </p>
+
+        <!-- What to expect -->
+        <div class="space-y-4 mb-10">
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style="background:rgba(52,168,84,0.12);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#34a854" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p class="text-sm text-body">Response within 24 hours, usually much faster</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style="background:rgba(52,168,84,0.12);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#34a854" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p class="text-sm text-body">Multilingual support team available 24/7</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style="background:rgba(52,168,84,0.12);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#34a854" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p class="text-sm text-body">All enquiries treated with strict confidentiality</p>
+          </div>
+        </div>
+
+        <!-- Social icons -->
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#34a854;">Connect:</p>
+          <div class="flex gap-3">
+            <!-- Twitter / X -->
+            <a href="#" class="social-icon" aria-label="Twitter">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.264 5.633 5.9-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <!-- Facebook -->
+            <a href="#" class="social-icon" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <!-- Instagram -->
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="#" class="social-icon" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Contact Form -->
+      <div style="background:#fff; border-radius:16px; padding:40px 36px; box-shadow:0 4px 32px rgba(0,0,0,0.07); border:1px solid #f0f0f0;">
+        <h3 class="text-text-heading font-bold mb-6" style="font-size:20px;">Send Us a Message</h3>
+
+        <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <!-- Web3Forms access key — replace PLACEHOLDER_KEY after signing up at web3forms.com -->
+          <input type="hidden" name="access_key" value="4af3a963-6574-4075-811e-6181f935b511" />
+          <input type="hidden" name="subject" value="New Contact Form Submission — Lustus Trading" />
+          <input type="hidden" name="redirect" value="false" />
+          <!-- Honeypot spam protection -->
+          <input type="checkbox" name="botcheck" style="display:none;" />
+
+          <div class="space-y-4">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider mb-2" style="color:#1a1a1a;">Full Name</label>
+                <input type="text" name="name" placeholder="John Smith" class="form-input" required />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider mb-2" style="color:#1a1a1a;">Email Address</label>
+                <input type="email" name="email" placeholder="john@example.com" class="form-input" required />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider mb-2" style="color:#1a1a1a;">Subject</label>
+              <input type="text" name="subject_line" placeholder="How can we help you?" class="form-input" required />
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider mb-2" style="color:#1a1a1a;">Message</label>
+              <textarea name="message" placeholder="Write your message here..." class="form-input" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn-primary w-full text-center" style="width:100%; border:none; font-size:15px;">
+              Send Message
+            </button>
+
+            <div id="form-result" role="alert"></div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid md:grid-cols-3 gap-10 mb-10">
+
+      <!-- Brand -->
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-brand rounded flex items-center justify-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 11L13 15L21 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="text-white font-bold text-sm tracking-wide uppercase">LUSTUS TRADING<br/><span class="text-brand">LIMITED</span></span>
+        </div>
+        <p class="text-gray-500 text-sm" style="line-height:1.8;">
+          A legal company registered in UK providing professional investment management services to members worldwide.
+        </p>
+        <p class="text-gray-500 text-xs mt-3">95 Wales Road, Kiveton Park, Sheffield,<br/>South Yorkshire, S26 6RA</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Quick Links</h4>
+        <div class="grid grid-cols-2 gap-1">
+          <a href="about.html" class="footer-link py-1">About</a>
+          <a href="faqs.html" class="footer-link py-1">FAQs</a>
+          <a href="contact.html" class="footer-link py-1">Contact Us</a>
+          <a href="#" class="footer-link py-1">License</a>
+          <a href="#" class="footer-link py-1">Insurance</a>
+          <a href="#" class="footer-link py-1">Privacy Policy</a>
+          <a href="#" class="footer-link py-1">Terms &amp; Conditions</a>
+          <a href="#" class="footer-link py-1">Site Map</a>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Start Investing Today</h4>
+        <p class="text-gray-500 text-sm mb-5" style="line-height:1.8;">Join over 22 million traders worldwide. Create your account and choose your investment plan.</p>
+        <a href="#" class="btn-primary text-sm py-3 px-6">Get Started</a>
+      </div>
+
+    </div>
+
+    <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+      <p class="text-gray-600 text-sm">&copy; 2025 Lustus Trading Limited. All rights reserved.</p>
+      <div class="flex gap-4">
+        <a href="#" class="footer-link text-xs">Privacy Policy</a>
+        <a href="#" class="footer-link text-xs">Terms &amp; Conditions</a>
+        <a href="#" class="footer-link text-xs">Site Map</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+  // Mobile nav toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // Contact form — Web3Forms submission
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const resultDiv = document.getElementById('form-result');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    resultDiv.className = '';
+    resultDiv.textContent = '';
+
+    try {
+      const data = new FormData(form);
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data
+      });
+      const json = await res.json();
+
+      if (json.success) {
+        resultDiv.className = 'success';
+        resultDiv.textContent = 'Message sent! We will get back to you soon.';
+        form.reset();
+      } else {
+        resultDiv.className = 'error';
+        resultDiv.textContent = json.message || 'Something went wrong. Please try again.';
+      }
+    } catch (err) {
+      resultDiv.className = 'error';
+      resultDiv.textContent = 'Network error. Please check your connection and try again.';
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Message';
+  });
+</script>
+
+</body>
+</html>
