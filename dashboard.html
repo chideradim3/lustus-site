@@ -399,7 +399,7 @@
   });
 
   function loadUserData(user) {
-    function applyUserData(name, email, data) {
+    function applyUserData(name, email, data, user) {
       const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || '?';
       document.getElementById('nav-avatar').textContent = initials;
       document.getElementById('nav-name').textContent = name;
@@ -415,6 +415,9 @@
       if (data.createdAt?.toDate) {
         const d = data.createdAt.toDate();
         document.getElementById('profile-joined').textContent = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      } else if (user?.metadata?.creationTime) {
+        const d = new Date(user.metadata.creationTime);
+        document.getElementById('profile-joined').textContent = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
       }
     }
 
@@ -423,7 +426,7 @@
       (snap) => {
         if (snap.exists()) {
           const data = snap.data();
-          applyUserData(data.name || user.email, data.email || user.email, data);
+          applyUserData(data.name || user.email, data.email || user.email, data, user);
         } else {
           // Firestore doc missing — create it from Firebase Auth data, then onSnapshot re-fires automatically
           setDoc(doc(db, 'users', user.uid), {
@@ -435,7 +438,7 @@
             totalDeposited: 0,
             createdAt: serverTimestamp()
           }).catch(() => {
-            applyUserData(user.email, user.email, {});
+            applyUserData(user.email, user.email, {}, user);
           });
         }
       },
